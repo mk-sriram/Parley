@@ -5,6 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignUpScreen from './SignUp';
 
+
+
+
 const LoginScreen = ({ navigation, route }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -53,7 +56,9 @@ const LoginScreen = ({ navigation, route }) => {
           <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={24} color="gray" />
         </TouchableOpacity>
       </View>
-      <Button title="Login" onPress={handleLogin} />
+      <View style={styles.LoginButtonContainer}> 
+      <Button style={ styles.LoginButton} title="Login" onPress={handleLogin} color="white" />
+      </View>
       <TouchableOpacity onPress={() => console.log('Forgot password pressed')}>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
@@ -101,6 +106,19 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
   },
+  LoginButton: { 
+    backgroundColor: 'white', 
+
+  }, 
+  LoginButtonContainer: { 
+    width: '80%',
+    backgroundColor: "#007bff",
+    borderRadius: 20, 
+    color: 'white',
+
+  }, 
+
+  
   passwordInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
