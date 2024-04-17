@@ -19,9 +19,12 @@ const bet = ({ profilePicture, prompt, onPlaceBet, onSkipBet, timestamp }) => {
       <Card.Content>
         <View style={styles.header}>
           <Image source={{ uri: profilePicture }} style={styles.profilePicture} />
-          <Paragraph style={styles.timestamp}>{timestamp}</Paragraph>
+          <View style={styles.usernameContainer}>
+             <Title style={styles.username} >{prompt}</Title>{/* Use Title component */}
+            <Paragraph style={styles.timestamp}>{timestamp}</Paragraph>
         </View>
-        <Title>{prompt}</Title>
+        </View>
+        {/* <Title>{prompt}</Title> */}
           <View style={styles.buttonContainer}>
             <Button mode="contained" onPress={handlePlaceBet} style={styles.placeButton}>
               Place Bet

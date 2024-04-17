@@ -1,175 +1,41 @@
-import React , {useState} from 'react';
-import { StyleSheet, View, ScrollView , Modal, Text, Button, TouchableOpacity, TextInput, TouchableWithoutFeedback} from 'react-native';
-import { Appbar } from 'react-native-paper';
-import Bet from './components/bet';
-import Header from './components/header';
-import Footer from './components/footer';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
+import SignUpScreen from './screens/SignUp'
+const Stack = createStackNavigator();
 
-export default function App() {
-  // Dummy function for handling bet placement
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [amount, setAmount] = useState('');
-
-  const handleAmountChange = (value) => {
-    console.log('Submitted amount:', amount);
-    setAmount(value);
-  };
-
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
-
-  const handlePlaceBet = () => {
-    console.log('Placing bet...');
-    setAmount('');
-    toggleModal(); 
-  };
-
-  // Dummy function for handling skipping bet
-  const handleSkipBet = () => {
-    console.log('Skipping bet...');
-  };
-
-  const handleSearchPress = () => {
-    console.log('Search button pressed');
-  };
-
-  const handleFilterPress = () => {
-    console.log('Filter button pressed');
-  };
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <SafeAreaProvider>
-      <View style={styles.container}>
-        <Header
-          onSearchPress={handleSearchPress}
-          onFilterPress={handleFilterPress}
-          // Optionally add onPress functions for left/right icons if needed
-        />
-
-        {/* Main Content (Feed with ScrollView) */}
-        <ScrollView contentContainerStyle={styles.feedContainer}>
-          <View style={styles.feed}>
-            {/* Example Bet components */}
-            <Bet
-              profilePicture="https://example.com/profile1.jpg"
-              prompt="What's your first bet?"
-              onPlaceBet={handlePlaceBet}
-              onSkipBet={handleSkipBet}
-              timestamp="2024-04-16 12:00 PM"
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        {isLoggedIn ? (
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <>
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+              initialParams={{ setIsLoggedIn }}
             />
-            <Bet
-              profilePicture="https://example.com/profile2.jpg"
-              prompt="What's your second bet?"
-              onPlaceBet={handlePlaceBet}
-              onSkipBet={handleSkipBet}
-              timestamp="2024-04-16 1:00 PM"
+            <Stack.Screen
+              name="SignUp"
+              component={SignUpScreen}
+              options={{ headerShown: false }}
             />
-            {/* Add more Bet components as needed */}
-          </View>
-        </ScrollView>
-        <Footer />
-      
-        <Modal visible={isModalVisible} transparent animationType="fade">
-        <TouchableWithoutFeedback onPress={toggleModal}>
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>Place a Bet !!</Text>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalText}>Enter dollar amount:</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter amount"
-                  value={amount}
-                  onChangeText={handleAmountChange}
-                  keyboardType="numeric"
-                />
-                <TouchableOpacity onPress={handlePlaceBet} style={styles.submitButton}>
-                  <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={toggleModal}>
-                  <Text style={styles.closeButton}>Cancel</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-      </TouchableWithoutFeedback>
-    </Modal>
-    
-      </View>
-    </SafeAreaProvider>
+          </>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-  },
-  feed: {
-    paddingHorizontal: 10,
-    paddingBottom: 10,
-  },
-
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    width: '80%',
-    height: '30%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  modalContent: {
-    alignItems: 'center',
-  },
-  modalText: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  input: {
-    width: 180,
-    height: 60,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 20,
-  },
-  submitButton: {
-    backgroundColor: '#007bff', // Blue color using hex code
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginBottom: 10,
-    width: 100,
-    
-  },
-  buttonText: {
-    color: '#fff', // White color for button text
-    fontSize: 16,
-    fontWeight: 'bold',
-    
-    
-  },
-  closeButton: {
-    color: '#333', // Dark color for cancel button text
-    fontSize: 16,
-  },
-});
+export default App;

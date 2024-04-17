@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { IconButton, Dialog, Portal, Button, TextInput, PaperProvider, DatePicker} from 'react-native-paper';
-// import TaskDialog from './TaskDialog'; // Import as default
+import TaskModal from './TaskModal'; // Import as default
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Footer = ({ onPressHome, onPressProfile }) => {
@@ -9,24 +9,39 @@ const Footer = ({ onPressHome, onPressProfile }) => {
   const [popupVisible, setPopupVisible] = useState(false); // State to track popup visibility
 
 
-  const [taskDescription, setTaskDescription] = useState('');
-  const currentDate = new Date();
-  const [dueDate, setDueDate] = useState(currentDate);
+//   const [taskDescription, setTaskDescription] = useState('');
+//   const currentDate = new Date();
+//   const [dueDate, setDueDate] = useState(currentDate);
 
-  const showPopup = () => setPopupVisible(true);
+//   const showPopup = () => setPopupVisible(true);
 
-  const hidePopup = () => {
-    setPopupVisible(false);
-  };
+//   const hidePopup = () => {
+//     setPopupVisible(false);
+//   };
 
-  const handlePressHome = () => {
+//   const handlePressHome = () => {
+//     setActiveButton('home');
+//     onPressHome();
+//   };
+
+//   const handlePressPlus = () => {
+//     setActiveButton('plus');
+//     showPopup();  // Show the TaskPopup
+//   };
+
+//   const handlePressProfile = () => {
+//     setActiveButton('profile');
+//     onPressProfile();
+//   };
+
+    const handlePressHome = () => {
     setActiveButton('home');
     onPressHome();
   };
 
   const handlePressPlus = () => {
     setActiveButton('plus');
-    showPopup();  // Show the TaskPopup
+    setPopupVisible(true); // Show the TaskModal
   };
 
   const handlePressProfile = () => {
@@ -34,42 +49,45 @@ const Footer = ({ onPressHome, onPressProfile }) => {
     onPressProfile();
   };
 
+  const handleClosePopup = () => {
+    setPopupVisible(false);
+  };
+
+  const handlePostTask = (taskData) => {
+    // Handle posting task data here
+    console.log('Task data:', taskData);
+    handleClosePopup(); // Close the popup after posting task
+  };
+
+  
+
   return (
     <SafeAreaProvider>
     
     <View style={styles.container}>
-      <IconButton
-        icon="home"
-        size={30}
-        style={[
-          styles.iconButton,
-          activeButton === 'home' ? styles.activeButton : null,
-        ]}
-        color={activeButton === 'home' ? '#00f' : '#808080'}
-        onPress={handlePressHome}
-      />
-      <IconButton
-        icon="plus"
-        size={30}
-        style={[
-          styles.iconButton,
-          activeButton === 'plus' ? styles.activeButton : null,
-        ]}
-        color={activeButton === 'plus' ? '#00f' : '#808080'}
-        onPress={handlePressPlus}
-      />
-      <IconButton
-        icon="account-circle"
-        size={30}
-        style={[
-          styles.iconButton,
-          activeButton === 'profile' ? styles.activeButton : null,
-        ]}
-        color={activeButton === 'profile' ? '#00f' : '#808080'}
-        onPress={handlePressProfile}
-      />
+    <IconButton
+          icon="home"
+          size={30}
+          style={[styles.iconButton, activeButton === 'home' ? styles.activeButton : null]}
+          color={activeButton === 'home' ? '#00f' : '#808080'}
+          onPress={handlePressHome}
+        />
+        <IconButton
+          icon="plus"
+          size={30}
+          style={[styles.iconButton, activeButton === 'plus' ? styles.activeButton : null]}
+          color={activeButton === 'plus' ? '#00f' : '#808080'}
+          onPress={handlePressPlus}
+        />
+        <IconButton
+          icon="account-circle"
+          size={30}
+          style={[styles.iconButton, activeButton === 'profile' ? styles.activeButton : null]}
+          color={activeButton === 'profile' ? '#00f' : '#808080'}
+          onPress={handlePressProfile}
+        />
       {/* TaskPopup using TaskDialog */}
-     
+      <TaskModal isVisible={popupVisible} onClose={handleClosePopup} onPost={handlePostTask} />
 
 
     </View>
