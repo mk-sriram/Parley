@@ -58,8 +58,8 @@ const HomeScreen =() => {
   };
 
   return (
-    <SafeAreaProvider>
-      <View style={styles.container}>
+    <SafeAreaProvider  style={styles.container} >
+      <View style={styles.content}>
         <Header
           onSearchPress={handleSearchPress}
           onFilterPress={handleFilterPress}
@@ -81,8 +81,11 @@ const HomeScreen =() => {
               />
             ))}
           </View>
+        
         </ScrollView>
-        <Footer />
+
+
+       
       
         <Modal visible={isModalVisible} transparent animationType="fade">
         <TouchableWithoutFeedback onPress={toggleModal}>
@@ -110,9 +113,15 @@ const HomeScreen =() => {
           </View>
       </TouchableWithoutFeedback>
     </Modal>
-    
+
+
+    <Footer style={styles.footer} />
+
+
       </View>
+      
     </SafeAreaProvider>
+    
   );
 }
 
@@ -123,12 +132,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  content: {
+    flex: 1,
+    paddingBottom: 60, // Adjust as needed based on footer height
+  },
   scrollViewContent: {
     flexGrow: 1,
   },
   feed: {
     paddingHorizontal: 10,
-    paddingBottom: 10,
+    paddingBottom: 330,
   },
 
   modalOverlay: {
@@ -189,5 +202,10 @@ const styles = StyleSheet.create({
   closeButton: {
     color: '#333', // Dark color for cancel button text
     fontSize: 16,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
   },
 });

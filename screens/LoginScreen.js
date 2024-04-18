@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons from Expo vector icons
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignUpScreen from './SignUp';
 
-const LoginScreen = ({ navigation, route }) => {
+const LoginScreen = ({ route }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
-
+  const navigation = useNavigation(); 
   const handleLogin = () => {
 
     if (username.trim() !== '' && password.trim() !== '') {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     color: 'white',
 
   }, 
-
+  
   passwordInput: {
     flex: 1,
     height: 40,

@@ -3,11 +3,12 @@ import { View, StyleSheet } from 'react-native';
 import { IconButton, Dialog, Portal, Button, TextInput, PaperProvider, DatePicker} from 'react-native-paper';
 import TaskModal from './TaskModal'; // Import as default
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer , useNavigation} from '@react-navigation/native';
 
 const Footer = ({ onPressHome, onPressProfile }) => {
   const [activeButton, setActiveButton] = useState('home'); // State to track active button
   const [popupVisible, setPopupVisible] = useState(false); // State to track popup visibility
-
+  const navigation = useNavigation();
 
 //   const [taskDescription, setTaskDescription] = useState('');
 //   const currentDate = new Date();
@@ -36,22 +37,30 @@ const Footer = ({ onPressHome, onPressProfile }) => {
 
     const handlePressHome = () => {
     setActiveButton('home');
-    onPressHome();
+    navigation.navigate('HomeScreen'); 
   };
 
   const handlePressPlus = () => {
+    
     setActiveButton('plus');
     setPopupVisible(true); // Show the TaskModal
-  };
-
-  const handlePressProfile = () => {
-    setActiveButton('profile');
-    onPressProfile();
+    
+    
   };
 
   const handleClosePopup = () => {
     setPopupVisible(false);
+    navigation.navigate('HomeScreen');  // post to home scren navigation 
+    
   };
+
+
+  const handlePressProfile = () => {
+    setActiveButton('profile');
+    navigation.navigate('Profile');
+  };
+
+ 
 
   const handlePostTask = (taskData) => {
     // Handle posting task data here
@@ -99,11 +108,12 @@ const Footer = ({ onPressHome, onPressProfile }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
+   
     alignItems: 'center',
-    backgroundColor: '#f4f4f4',
+    backgroundColor: 'white',
     justifyContent: 'space-evenly',
     height: 70, // Adjust height as needed
+    marginBottom: 50, 
   },
   iconButton: {
     backgroundColor: 'white',
