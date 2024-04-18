@@ -12,6 +12,7 @@ import Footer from '../components/footer';
 
 
 export default function ProfileScreen() {
+  const [balance, setBalance ]= useState(); 
   const navigation = useNavigation();
   const [showActiveBets, setShowActiveBets] = useState(true);
 
@@ -30,6 +31,7 @@ export default function ProfileScreen() {
         <ImageViewer placeholderImageSource={PlaceholderImage} />
       </View>
 
+      
       <View style={styles.buttonContainer}>
         <Pressable style={showActiveBets ? styles.onButton : styles.offButton} onPress={() => setShowActiveBets(true)}>
           <Text style={[styles.buttontext, showActiveBets ? styles.activeText : styles.inactiveText]}>

@@ -18,7 +18,7 @@ const Post = ({ name, imageSource, caption , endDate}) => {
      <View style={styles.componentContainer}>
         {imageSource ? (
           <View style={styles.imageContainer}>
-            <Image source={{ uri: imageSource }} style={[styles.image, { alignSelf: "center" }]}/>
+            <Image source={ imageSource } style={[styles.image, { alignSelf: "center" }]}/>
           </View>
         ) : (
           <View style={styles.noImageContainer}>

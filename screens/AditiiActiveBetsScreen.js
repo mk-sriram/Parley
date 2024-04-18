@@ -31,7 +31,7 @@ export default function App() {
     {
       id: 3,
       name: "Sri MK",
-      imageSource: 'https://via.placeholder.com/200',
+      imageSource: require('https://via.placeholder.com/200'),
       caption: 'Upload pictures from trek!',
       endDate: "April 5th",
     },
