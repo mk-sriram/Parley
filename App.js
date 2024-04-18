@@ -8,6 +8,7 @@ import InactiveBets from './components/PastBets'; // Assuming you have this comp
 import { DefaultTheme } from 'react-native-paper';
 import PlaceholderImage from './assets/images/background-image.png';
 import Calendar from './components/Calendar'
+
 export default function App(navigation) {
   const [showActiveBets, setShowActiveBets] = useState(true);
 
