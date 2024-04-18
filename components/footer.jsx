@@ -68,6 +68,9 @@ const Footer = ({ onPressHome, onPressProfile }) => {
     handleClosePopup(); // Close the popup after posting task
   };
 
+  const handleActiveTasks = () => { 
+    navigation.navigate('ActiveBets'); 
+  }
   
 
   return (
@@ -88,6 +91,15 @@ const Footer = ({ onPressHome, onPressProfile }) => {
           color={activeButton === 'plus' ? '#00f' : '#808080'}
           onPress={handlePressPlus}
         />
+
+          <IconButton
+          icon="progress-star"
+          size={30}
+          style={[styles.iconButton, activeButton === 'activeBets' ? styles.activeButton : null]}
+          color={activeButton === 'profile' ? '#00f' : '#808080'}
+          onPress={handleActiveTasks}
+        />
+
         <IconButton
           icon="account-circle"
           size={30}
@@ -95,6 +107,8 @@ const Footer = ({ onPressHome, onPressProfile }) => {
           color={activeButton === 'profile' ? '#00f' : '#808080'}
           onPress={handlePressProfile}
         />
+
+          
       {/* TaskPopup using TaskDialog */}
       <TaskModal isVisible={popupVisible} onClose={handleClosePopup} onPost={handlePostTask} />
 

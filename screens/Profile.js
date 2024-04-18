@@ -22,7 +22,7 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <Button title="Settings" />
+        <Button title="Settings" onPress={() => navigation.navigate('Settings')}/>
         <Text style={styles.profile}>Profile</Text>
         <Button title="Calendar" onPress={() => navigation.navigate('Calendar')} />
       </View>

@@ -1,28 +1,28 @@
-import React , {useState} from 'react';
-import { StyleSheet, View, ScrollView , Modal, Text, Button, TouchableOpacity, TextInput, TouchableWithoutFeedback} from 'react-native';
-import { Appbar } from 'react-native-paper';
+import React, { useState } from 'react';
+import {Animated, StyleSheet, View, ScrollView, Modal, Text, TouchableOpacity, TextInput, TouchableWithoutFeedback } from 'react-native';
 import Bet from '../components/bet';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-const HomeScreen =() => {
-  // Dummy function for handling bet placement
-
+const HomeScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [amount, setAmount] = useState('');
+  const [currentBetId, setCurrentBetId] = useState(null); // State to store the current bet ID
   const [bets, setBets] = useState([
     {
       id: 1,
       profilePicture: 'https://example.com/profile1.jpg',
       prompt: "What's your first bet?",
       timestamp: '2024-04-16 12:00 PM',
+      opacity: new Animated.Value(1),
     },
     {
       id: 2,
       profilePicture: 'https://example.com/profile2.jpg',
       prompt: "What's your second bet?",
       timestamp: '2024-04-16 1:00 PM',
+      opacity: new Animated.Value(1),
     },
     // Add more initial bet objects as needed
   ]);
@@ -36,15 +36,22 @@ const HomeScreen =() => {
     setIsModalVisible(!isModalVisible);
   };
 
-  const handlePlaceBet = () => {
+  const handlePlaceBet = (betId) => {
     console.log('Placing bet...');
     setAmount('');
-    toggleModal(); 
+    toggleModal();
+    setCurrentBetId(betId); // Set the current bet ID
   };
 
- 
+  const handlePlaceBetFromModal = () => {
+    console.log('Placing bet from modal...');
+    const updatedBets = bets.filter((bet) => bet.id !== currentBetId);
+    if (updatedBets.length < bets.length) {
+      setBets(updatedBets);
+    }
+    toggleModal();
+  };
 
-  // Dummy function for handling skipping bet
   const handleSkipBet = () => {
     console.log('Skipping bet...');
   };
@@ -58,72 +65,57 @@ const HomeScreen =() => {
   };
 
   return (
-    <SafeAreaProvider  style={styles.container} >
+    <SafeAreaProvider style={styles.container}>
       <View style={styles.content}>
         <Header
           onSearchPress={handleSearchPress}
           onFilterPress={handleFilterPress}
-          // Optionally add onPress functions for left/right icons if needed
         />
-
-        {/* Main Content (Feed with ScrollView) */}
         <ScrollView contentContainerStyle={styles.feedContainer}>
-        <View style={styles.feed}>
-            {/* Render bet components from state */}
+          <View style={styles.feed}>
             {bets.map((bet) => (
               <Bet
                 key={bet.id}
                 profilePicture={bet.profilePicture}
                 prompt={bet.prompt}
-                onPlaceBet={handlePlaceBet}
+                onPlaceBet={() => handlePlaceBet(bet.id)}
                 onSkipBet={handleSkipBet}
                 timestamp={bet.timestamp}
               />
             ))}
           </View>
-        
         </ScrollView>
-
-
-       
-      
         <Modal visible={isModalVisible} transparent animationType="fade">
-        <TouchableWithoutFeedback onPress={toggleModal}>
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>Place a Bet !!</Text>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalText}>Enter dollar amount:</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="$XXXX"
-                  placeholderTextColor="#999"
-                  value={amount}
-                  onChangeText={handleAmountChange}
-                  keyboardType="numeric"
-                />
-                <TouchableOpacity onPress={handlePlaceBet} style={styles.submitButton}>
-                  <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={toggleModal}>
-                  <Text style={styles.closeButton}>Cancel</Text>
-                </TouchableOpacity>
+          <TouchableWithoutFeedback onPress={toggleModal}>
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalContainer}>
+                <Text style={styles.modalTitle}>Place a Bet !!</Text>
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalText}>Enter dollar amount:</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="$XXXX"
+                    placeholderTextColor="#999"
+                    value={amount}
+                    onChangeText={handleAmountChange}
+                    keyboardType="numeric"
+                  />
+                  <TouchableOpacity onPress={handlePlaceBetFromModal} style={styles.submitButton}>
+                    <Text style={styles.buttonText}>Submit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={toggleModal}>
+                    <Text style={styles.closeButton}>Cancel</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
-      </TouchableWithoutFeedback>
-    </Modal>
-
-
-    <Footer style={styles.footer} />
-
-
+          </TouchableWithoutFeedback>
+        </Modal>
+        <Footer style={styles.footer} />
       </View>
-      
     </SafeAreaProvider>
-    
   );
-}
+};
 
 export default HomeScreen;
 
@@ -136,14 +128,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingBottom: 60, // Adjust as needed based on footer height
   },
-  scrollViewContent: {
-    flexGrow: 1,
-  },
   feed: {
     paddingHorizontal: 10,
-    paddingBottom: 330,
+    minHeight: '100%', // Set a minimum height to prevent resizing
+    flexGrow: 1,
+    paddingBottom: 330, // Adjust as needed based on the bottom padding requirement
+    
   },
-
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -180,7 +171,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 20,
-    
   },
   submitButton: {
     backgroundColor: '#007bff', // Blue color using hex code
@@ -190,14 +180,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: 100,
     alignItems: 'center',
-    
   },
   buttonText: {
     color: '#fff', // White color for button text
     fontSize: 16,
     fontWeight: 'bold',
-    
-    
   },
   closeButton: {
     color: '#333', // Dark color for cancel button text
