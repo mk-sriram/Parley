@@ -1,0 +1,40 @@
+// import React , {useState} from 'react';
+// import { Dialog, Portal, Button, TextInput, PaperProvider } from 'react-native-paper';
+// import { DatePicker } from 'react-native-paper-dates'; // Make sure to import DatePicker if needed
+
+// const TaskDialog = ({ visible, onDismiss }) => {
+
+
+//   const [taskDescription, setTaskDescription] = useState('');
+//   const currentDate = new Date();
+//   const [dueDate, setDueDate] = useState(currentDate);
+
+//   return (
+   
+//     <Portal>
+//       <Dialog visible={visible} onDismiss={onDismiss}>
+//         <Dialog.Title>Compose a Task</Dialog.Title>
+//         <Dialog.Content>
+//           <TextInput
+//             label="Describe your task here"
+//             value={taskDescription}
+//             onChangeText={setTaskDescription}
+//           />
+//           <DatePicker
+//             label="Due Date"
+//             value={dueDate}
+//             mode="date"
+//             onChange={(date) => setDueDate(date)}
+//           />
+//         </Dialog.Content>
+//         <Dialog.Actions>
+//           <Button onPress={onDismiss}>Cancel</Button>
+//           <Button onPress={onDismiss}>Post</Button>
+//         </Dialog.Actions>
+//       </Dialog>
+//     </Portal>
+    
+//   );
+// };
+
+// export default TaskDialog;
