@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons from Expo vector icons
 // Define the SignUpScreen component
 const SignUpScreen = ({ navigation }) => {
@@ -11,7 +11,7 @@ const SignUpScreen = ({ navigation }) => {
     // For example, you can call an API to register the user
     if (username.trim() !== '' && password.trim() !== '') {
         // Call the setIsLoggedIn function passed as a prop
-            alert('User registered successfully');
+        Alert.alert('Success', 'User registered successfully.');
         navigation.navigate('Login'); // Navigate back to LoginScreen after sign-up
 
       } else {
@@ -48,6 +48,7 @@ const SignUpScreen = ({ navigation }) => {
       </View>
       
       <Button title="Sign Up" onPress={handleSignUp} />
+      <Button title="Back" onPress={()=> { navigation.navigate('Login'); }} />
     </View>
   );
 };
