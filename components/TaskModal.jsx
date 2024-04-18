@@ -20,6 +20,7 @@ const [taskTitle, setTaskTitle] = useState('');
     return false; 
   }
   return (
+
     <Modal visible={isVisible} transparent animationType="fade">
          <TouchableWithoutFeedback onPress={toggleVisible}> 
       <View style={styles.modalOverlay}>
@@ -33,6 +34,7 @@ const [taskTitle, setTaskTitle] = useState('');
               value={taskTitle}
               onChangeText={setTaskTitle}
             />
+
             <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
             {
                 <DateTimePicker
@@ -48,6 +50,8 @@ const [taskTitle, setTaskTitle] = useState('');
                 />
            }
             </TouchableOpacity>
+     
+
           <TouchableOpacity onPress={handlePost} style={styles.submitButton}>
             <Text style={styles.buttonText}>Post</Text>
           </TouchableOpacity>
