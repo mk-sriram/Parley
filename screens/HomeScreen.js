@@ -12,20 +12,33 @@ const HomeScreen = () => {
   const [bets, setBets] = useState([
     {
       id: 1,
-      profilePicture: 'https://example.com/profile1.jpg',
+      profilePicture: require('../assets/images/profile1.png'),
       prompt: "What's your first bet?",
       timestamp: '2024-04-16 12:00 PM',
       opacity: new Animated.Value(1),
     },
     {
       id: 2,
-      profilePicture: 'https://example.com/profile2.jpg',
+      profilePicture: require('../assets/images/profile2.png'),
       prompt: "What's your second bet?",
+      timestamp: '2024-04-16 1:00 PM',
+      opacity: new Animated.Value(1),
+    },
+    {
+      id: 3,
+      profilePicture: require('../assets/images/profile3.png'),
+      prompt: "third bet",
       timestamp: '2024-04-16 1:00 PM',
       opacity: new Animated.Value(1),
     },
     // Add more initial bet objects as needed
   ]);
+
+
+
+  const handleAddBet = (newBet) => {
+    setBets((prevBets) => [...prevBets, newBet]);
+  };
 
   const handleAmountChange = (value) => {
     console.log('Submitted amount:', amount);
@@ -111,7 +124,7 @@ const HomeScreen = () => {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
-        <Footer style={styles.footer} />
+        <Footer style={styles.footer} onAddBet={handleAddBet} bets={bets} />
       </View>
     </SafeAreaProvider>
   );
@@ -132,7 +145,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     minHeight: '100%', // Set a minimum height to prevent resizing
     flexGrow: 1,
-    paddingBottom: 330, // Adjust as needed based on the bottom padding requirement
+    paddingBottom: 270,
+     // Adjust as needed based on the bottom padding requirement
     
   },
   modalOverlay: {

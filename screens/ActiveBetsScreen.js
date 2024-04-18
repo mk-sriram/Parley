@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView  } from 'react-native';
 import Header from '../components/HeaderActiveBets';
 import Footer from '../components/footer';
 import ActiveBet from '../components/ActiveBetComponent';
+import { StatusBar } from 'expo-status-bar';
+import Post from './EachPost';
 
 export default function ActiveBetsScreen() {
   const [activeBets, setActiveBets] = useState([

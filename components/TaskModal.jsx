@@ -11,13 +11,13 @@ const [taskTitle, setTaskTitle] = useState('');
 
   const handlePost = () => {
     // Call onPost to handle task posting logic
-    onPost({ title: taskTitle, dueDate });
+    //onPost({ title: taskTitle, dueDate });
     onClose();
 
     // Add the new bet to the bets state in HomeScreen
-    onAddBet({
+    onPost({
       id: new Date().getTime(), // Unique ID for the new bet
-      profilePicture: 'https://example.com/new-profile.jpg', // Example URL for profile picture
+      profilePicture: require('../assets/images/background-image.jpg'), // Example URL for profile picture
       prompt: taskTitle,
       timestamp: new Date().toLocaleString(),
     });

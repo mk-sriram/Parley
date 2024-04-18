@@ -18,7 +18,7 @@ const bet = ({ profilePicture, prompt, onPlaceBet, onSkipBet, timestamp }) => {
     <Card style={styles.cardContainer}>
       <Card.Content>
         <View style={styles.header}>
-          <Image source={{ uri: profilePicture }} style={styles.profilePicture} />
+          <Image source={profilePicture} style={styles.profilePicture} />
           <View style={styles.usernameContainer}>
              <Title style={styles.username} >{prompt}</Title>{/* Use Title component */}
             <Paragraph style={styles.timestamp}>{timestamp}</Paragraph>

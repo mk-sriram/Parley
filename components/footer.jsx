@@ -5,7 +5,7 @@ import TaskModal from './TaskModal'; // Import as default
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer , useNavigation} from '@react-navigation/native';
 
-const Footer = ({ onPressHome, onPressProfile }) => {
+const Footer = ({ onPressHome, onPressProfile , onAddBet , bets}) => {
   const [activeButton, setActiveButton] = useState('home'); // State to track active button
   const [popupVisible, setPopupVisible] = useState(false); // State to track popup visibility
   const navigation = useNavigation();
@@ -65,6 +65,9 @@ const Footer = ({ onPressHome, onPressProfile }) => {
   const handlePostTask = (taskData) => {
     // Handle posting task data here
     console.log('Task data:', taskData);
+    onAddBet();
+    
+    //INSERT FUNCTION TO ADD TO BET 
     handleClosePopup(); // Close the popup after posting task
   };
 
@@ -110,7 +113,7 @@ const Footer = ({ onPressHome, onPressProfile }) => {
 
           
       {/* TaskPopup using TaskDialog */}
-      <TaskModal isVisible={popupVisible} onClose={handleClosePopup} onPost={handlePostTask} />
+      <TaskModal isVisible={popupVisible} onClose={handleClosePopup} onPost={onAddBet} />
 
 
     </View>
