@@ -3,7 +3,7 @@ import { StyleSheet, View, Modal, Text, TouchableOpacity, TouchableWithoutFeedba
 import DateTimePicker from '@react-native-community/datetimepicker'; // Import DateTimePicker
 import moment from 'moment';
 
-const TaskModal = ({ isVisible, onClose, onPost }) => {
+const TaskModal = ({ isVisible, onClose, onPost, onAddBet }) => {
 const [taskTitle, setTaskTitle] = useState('');
 
   const [dueDate, setDueDate] = useState(new Date());
@@ -13,6 +13,14 @@ const [taskTitle, setTaskTitle] = useState('');
     // Call onPost to handle task posting logic
     onPost({ title: taskTitle, dueDate });
     onClose();
+
+    // Add the new bet to the bets state in HomeScreen
+    onAddBet({
+      id: new Date().getTime(), // Unique ID for the new bet
+      profilePicture: 'https://example.com/new-profile.jpg', // Example URL for profile picture
+      prompt: taskTitle,
+      timestamp: new Date().toLocaleString(),
+    });
   };
 
 
